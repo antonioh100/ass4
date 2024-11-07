@@ -1,0 +1,15 @@
+# Use Fedora as the base image
+FROM fedora:latest
+
+# Update the system and install necessary applications
+RUN dnf -y upgrade && \
+    dnf -y install tuxpaint vim httpd
+
+# Add the myinfo.html file to the web server's root directory
+COPY myinfo.html /var/www/html/myinfo.html
+
+# Expose port 80 for HTTP traffic
+EXPOSE 80
+
+# Run the httpd service in the foreground
+ENTRYPOINT ["/usr/sbin/httpd", "-DFOREGROUND"]
